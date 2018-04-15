@@ -46,8 +46,21 @@ class Compare extends Command
     {
         try {
             $method='GET';
-
-            $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery?path=%2Fpublic%2FOpenReports%2FPortal_Producao%2FPainel_Remuneracao%2FPainel_Remuneracao.cda&dataAccessId=sql_jndi&parampara_ano=2018&parammes_=3&paramsituacao=Ativo&parammatricula_=&parampara_orgao=%25&parampesquisa_=&parampesquisa_cargo_=&paramoutros=3&paramlimit_=10&paramoffset_=50';
+            $params =[
+                'path' => '/public/OpenReports/Portal_Producao/Painel_Remuneracao/Painel_Remuneracao.cda',
+                'dataAccessId' => 'sql_jndi',
+                'parampara_ano' => '2017',
+                'parammes_' => '3',
+                'paramsituacao' => 'Ativo',
+                'parammatricula_' => '',
+                'parampara_orgao' => '%',
+                'parampesquisa_' => '',
+                'parampesquisa_cargo_' => '',
+                'paramoutros' => '3',
+                'paramlimit_' => '5000',
+                'paramoffset_' => '50'
+            ];
+            $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery'.$this->httpQueryBuild($params);
             $options = [
                 'headers' => [
                     'postman-token' => 'f7ddb980-67a6-3ff4-50a5-02d2ddb509e4',
@@ -66,7 +79,7 @@ class Compare extends Command
             $response = $this->clientService->request($method, $endpoint, $options);
            $response = json_decode($response->getBody(), true);
 
-           print_r($response['resultset']);
+           echo count($response['resultset']);
 
         } catch (ClientException $e) {
             $message = json_decode($e->getResponse()->getBody(), true);
@@ -75,5 +88,33 @@ class Compare extends Command
 
     }
 
+    /**
+     * @param array $params
+     * @return string
+     */
+    public function httpQueryBuild(array $params)
+    {
+        $httpQuery = '';
+
+        foreach ($params as $key => $value)
+        {
+            if (!is_array($value))
+            {
+                $httpQuery .= urlencode($key)  .'='. urlencode($value) . '&';
+            } else {
+                foreach ($value as $v2)
+                {
+                    if (!is_array($v2))
+                    {
+                        $httpQuery .= urlencode($key)  .'='. urlencode($v2) . '&';
+                    }
+                }
+            }
+        }
+
+        $httpQuery = rtrim($httpQuery, '&');
+
+        return '?' . $httpQuery;
+    }
 
 }
