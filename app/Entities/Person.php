@@ -30,6 +30,7 @@ class Person extends Model implements Transformable
         'function_person',
         'maturity_office',
         'value_liquid',
+        'status',
     ];
     /**
      * @var array
@@ -40,8 +41,8 @@ class Person extends Model implements Transformable
         'deleted_at',
     ];
     
-    const STATUS_ENTRADA = 0;
+    const STATUS_ENTRADA     = 0;
     const STATUS_PERMANENCIA = 1;
-    const STATUS_SAIDA = 2;
+    const STATUS_SAIDA       = 2;
 
 }

@@ -51,8 +51,8 @@ class Compare extends Command
      */
     public function handle()
     {
-//        $limit = $this->service->getCountPortal();
-        $people = $this->service->getPortal(1);
+        $limit = $this->service->getCountPortal();
+        $people = $this->service->getPortal($limit);
        
         foreach ($people as $person) {
             $data = [
@@ -85,13 +85,15 @@ class Compare extends Command
         return !empty(Person::where(['registration'], '=', $registration)->count());
     }
 
+    /**
+     * @return mixed
+     */
     public function verifyOutput()
     {
-        $peoples_output = Person::where('update_at','<',Carbon::now())->get();
+        return Person::where('update_at','<',Carbon::now())
+            ->update(['status' => Person::STATUS_SAIDA]);
 
-        foreach ($peoples_output as $item) {
 
-        }
     }
    
 

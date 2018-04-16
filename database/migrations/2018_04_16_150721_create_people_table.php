@@ -26,6 +26,7 @@ class CreatePeopleTable extends Migration
 			$table->string('function_person',50)->nullable();
 			$table->decimal('maturity_office', 10, 2)->nullable();
 			$table->decimal('value_liquid', 10, 2)->nullable();
+			$table->smallInteger('status')->default(0);
             $table->timestamps();
 		});
 	}
