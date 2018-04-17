@@ -28,9 +28,9 @@ class PersonTransformer extends TransformerAbstract
             'institution'  => $model->institution,
             'registration' => $model->registration,
             'value_liquid' => $model->value_liquid,
+            'search_id'    => $model->search_id,
             'status'       => $model->status,
             'status_title' => $model->statusTitle(),
-
             'created_at' => $model->created_at->toDateTimeString(),
             'updated_at' => $model->updated_at->toDateTimeString()
         ];

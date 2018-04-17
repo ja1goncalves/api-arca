@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\Service;
 use App\Repositories\PersonRepository;
+use App\Services\SearchService;
 
 /**
  * Class EmailMessage
@@ -34,17 +35,22 @@ class Compare extends Command
      */
     protected $description = 'Create Directories and Remove Directories';
 
+    protected $searchService;
 
     /**
      * Compare constructor.
      * @param Service $service
      * @param PersonRepository $personRepository
+     * @param SearchService $searchService
      */
-    public function __construct(Service $service,PersonRepository $personRepository )
+    public function __construct(Service          $service,
+                                PersonRepository $personRepository,
+                                SearchService    $searchService)
     {
         parent::__construct();
         $this->service = $service;
         $this->personRepository = $personRepository;
+        $this->searchService    = $searchService;
     }
 
     /**
@@ -53,8 +59,9 @@ class Compare extends Command
      */
     public function handle()
     {
-        $limit = $this->service->getCountPortal();
-        $people = $this->service->getPortal(20);
+        $limit  = $this->service->getCountPortal();
+        $search = $this->searchService->create(['total' => $limit],true);
+        $people = $this->service->getPortal($limit);
        
         foreach ($people as $person) {
             $data = [
@@ -67,6 +74,7 @@ class Compare extends Command
                 'function_person'=> $person[7],
                 'value_liquid'   => $person[9],
                 'status'         => 0,
+                'search_id'      => $search->id,
             ];
             if (!$this->verifyExist($person[2]))
             {

@@ -31,6 +31,7 @@ class Person extends Model implements Transformable
         'maturity_office',
         'value_liquid',
         'status',
+        'search_id',
     ];
     /**
      * @var array

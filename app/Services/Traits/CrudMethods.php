@@ -27,15 +27,13 @@ trait CrudMethods
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  array $data
-     *
-     * @return \Illuminate\Http\Response
+     * @param array $data
+     * @param bool $skipPresenter
+     * @return mixed
      */
-    public function create(array $data)
+    public function create(array $data, $skipPresenter = false)
     {
-        return $this->repository->create($data);
+        return $skipPresenter ? $this->repository->skipPresenter()->create($data) : $this->repository->create($data);
     }
 
     /**
