@@ -14,34 +14,34 @@ class CreateNormalizeSearchFunction extends Migration
      */
     public function up()
     {
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE OR REPLACE FUNCTION normalize_search(str text) RETURNS text AS $$
-        DECLARE
-            aux   varchar[];
-            arr varchar[] := array[
-                ['áàãâä','aaaaa'],
-                ['ÁÀÃÂÄ','AAAAA'],
-                ['éèêë', 'eeee'],
-                ['ÉÈÊË', 'EEEE'],
-                ['íìîï', 'iiii'],
-                ['ÍÌÎÏ', 'IIII'],
-                ['óòõôö','ooooo'],
-                ['ÓÒÕÔÖ','OOOOO'],
-                ['úùûü', 'uuuu'],
-                ['ÚÙÛÜ', 'UUUU'],
-                ['ñ','n'],
-                ['Ñ','N']
-            ];
-
-            BEGIN
-               FOREACH aux SLICE 1 IN ARRAY arr
-               LOOP
-                str := TRANSLATE(str, aux[1], aux[2]);
-               END LOOP;
-
-               RETURN regexp_replace(str, '[^a-zA-Z0-9 ]', '', 'g');
-            END;
-        $$ LANGUAGE plpgsql");
+//        \Illuminate\Support\Facades\DB::statement("CREATE FUNCTION normalize_search( textvalue VARCHAR(10000) ) RETURNS VARCHAR(10000)
+//
+//BEGIN
+//
+//    SET @textvalue = textvalue;
+//
+//    -- ACCENTS
+//    SET @withaccents = 'ŠšŽžÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝŸÞàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿþƒ';
+//    SET @withoutaccents = 'SsZzAAAAAAACEEEEIIIINOOOOOOUUUUYYBaaaaaaaceeeeiiiinoooooouuuuyybf';
+//    SET @count = LENGTH(@withaccents);
+//
+//    WHILE @count > 0 DO
+//        SET @textvalue = REPLACE(@textvalue, SUBSTRING(@withaccents, @count, 1), SUBSTRING(@withoutaccents, @count, 1));
+//        SET @count = @count - 1;
+//    END WHILE;
+//
+//    -- SPECIAL CHARS
+//    SET @special = '!@#$%¨&*()_+=§¹²³£¢¬\"`´{[^~}]<,>.:;?/°ºª+*|\\''';
+//    SET @count = LENGTH(@special);
+//
+//    WHILE @count > 0 do
+//        SET @textvalue = REPLACE(@textvalue, SUBSTRING(@special, @count, 1), '');
+//        SET @count = @count - 1;
+//    END WHILE;
+//
+//    RETURN @textvalue;
+//
+//END;");
     }
 
     /**
