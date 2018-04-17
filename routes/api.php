@@ -18,3 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->get('/user-logged', 'UsersController@index');
+
+Route::group(['middleware' => ['auth:api']], function(){
+
+    Route::resource('people', 'PeopleController', ['except' => ['create', 'edit']]);
+
+
+});

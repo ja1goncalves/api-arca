@@ -22,12 +22,17 @@ class PersonTransformer extends TransformerAbstract
     public function transform(Person $model)
     {
         return [
-            'id'         => (int) $model->id,
+            'id'           => (int) $model->id,
+            'name'         => $model->name,
+            'cpf'          => $model->cpf,
+            'institution'  => $model->institution,
+            'registration' => $model->registration,
+            'value_liquid' => $model->value_liquid,
+            'status'       => $model->status,
+            'status_title' => $model->statusTitle(),
 
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'created_at' => $model->created_at->toDateTimeString(),
+            'updated_at' => $model->updated_at->toDateTimeString()
         ];
     }
 }

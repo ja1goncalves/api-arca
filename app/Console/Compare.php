@@ -54,7 +54,7 @@ class Compare extends Command
     public function handle()
     {
         $limit = $this->service->getCountPortal();
-        $people = $this->service->getPortal($limit);
+        $people = $this->service->getPortal(20);
        
         foreach ($people as $person) {
             $data = [
@@ -66,6 +66,7 @@ class Compare extends Command
                 'office'         => $person[5],
                 'function_person'=> $person[7],
                 'value_liquid'   => $person[9],
+                'status'         => 0,
             ];
             if (!$this->verifyExist($person[2]))
             {
@@ -84,7 +85,7 @@ class Compare extends Command
      */
     public function verifyExist($registration)
     {
-        return !empty($this->personRepository->findWhere(['registration' => $registration ])->count());
+        return !empty($this->personRepository->skipPresenter()->findWhere(['registration' => $registration ])->count());
     }
 
     /**

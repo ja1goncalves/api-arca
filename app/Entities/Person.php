@@ -45,4 +45,13 @@ class Person extends Model implements Transformable
     const STATUS_PERMANENCIA = 1;
     const STATUS_SAIDA       = 2;
 
+    /**
+     * @return string
+     */
+    public function statusTitle()
+    {
+        if ($this->attributes['status'] == 0) return 'Entrada';
+
+        return $this->attributes['status'] == 1 ? 'Permanencia' : 'Saida';
+    }
 }
