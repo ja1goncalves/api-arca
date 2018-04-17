@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Presenters\PersonPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\PersonRepository;
@@ -13,8 +14,16 @@ use App\Validators\PersonValidator;
  *
  * @package namespace App\Repositories;
  */
-class PersonRepositoryEloquent extends BaseRepository implements PersonRepository
+class PersonRepositoryEloquent extends AppRepository implements PersonRepository
 {
+
+    protected $fieldSearchable = [
+        'id',
+        'institution'  => 'ilike',
+        'cpf'          => 'ilike',
+        'name'         => 'ilike',
+        'registration' => 'ilike',
+    ];
     /**
      * Specify Model class name
      *
@@ -32,17 +41,15 @@ class PersonRepositoryEloquent extends BaseRepository implements PersonRepositor
     */
     public function validator()
     {
-
         return PersonValidator::class;
     }
 
-
     /**
-     * Boot up the repository, pushing criteria
+     * @return mixed
      */
-    public function boot()
+    public function presenter()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        return PersonPresenter::class;
     }
-    
+
 }

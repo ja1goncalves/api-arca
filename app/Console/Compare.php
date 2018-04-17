@@ -6,7 +6,7 @@ use App\Entities\Person;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\Service;
-
+use App\Repositories\PersonRepository;
 
 /**
  * Class EmailMessage
@@ -38,11 +38,13 @@ class Compare extends Command
     /**
      * Compare constructor.
      * @param Service $service
+     * @param PersonRepository $personRepository
      */
-    public function __construct(Service $service  )
+    public function __construct(Service $service,PersonRepository $personRepository )
     {
         parent::__construct();
         $this->service = $service;
+        $this->personRepository = $personRepository;
     }
 
     /**
@@ -67,7 +69,7 @@ class Compare extends Command
             ];
             if (!$this->verifyExist($person[2]))
             {
-                Person::create($data);
+                $this->personRepository->create($data);
             }else{
                 Person::where('registration', '=', $person[2])
                     ->update(array_merge($data,['status' => Person::STATUS_PERMANENCIA]));
@@ -82,7 +84,7 @@ class Compare extends Command
      */
     public function verifyExist($registration)
     {
-        return !empty(Person::where(['registration'], '=', $registration)->count());
+        return !empty($this->personRepository->findWhere(['registration' => $registration ])->count());
     }
 
     /**
@@ -92,8 +94,6 @@ class Compare extends Command
     {
         return Person::where('update_at','<',Carbon::now())
             ->update(['status' => Person::STATUS_SAIDA]);
-
-
     }
    
 
