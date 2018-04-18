@@ -24,6 +24,19 @@ class PersonRepositoryEloquent extends AppRepository implements PersonRepository
         'name'         => 'ilike',
         'registration' => 'ilike',
     ];
+
+    /**
+     * Regras para busca
+     *
+     * @var array
+     */
+    protected $fieldsRules = [
+        'id'            => ['numeric', 'max:2147483647'],
+        'institution'   => ['max:255'],
+        'name'          => ['max:100'],
+        'cpf'           => ['max:20'],
+        'registration'  => ['max:100'],
+    ];
     /**
      * Specify Model class name
      *
