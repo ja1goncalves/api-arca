@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entities\Person;
 use App\Repositories\PersonRepository;
 use App\Services\Traits\CrudMethods;
 
@@ -23,4 +24,16 @@ class PersonService extends AppService
         $this->repository = $repository;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPersonPermanent()
+    {
+        $person = $this->findWhere(['status' => Person::STATUS_PERMANENCIA], true);
+        if (empty($person))
+        {
+            $person = $this->findWhere(['status' => Person::STATUS_ENTRADA], true);
+        }
+        return $person->search_id;
+    }
 }

@@ -24,7 +24,7 @@ class SearchTransformer extends TransformerAbstract
         return [
             'id'         => (int) $model->id,
             'total'      => $model->total,
-            'created_at' => $model->created_at->toDateTimeString(),
+            'created_at' => $model->created_at->format('Y-m'),
             'updated_at' => $model->updated_at->toDateTimeString()
         ];
     }

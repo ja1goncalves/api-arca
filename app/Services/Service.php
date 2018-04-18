@@ -6,32 +6,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+
 /**
  * Class Service
  * @package App\Services
  */
 class Service 
 {
-    /**
-     * @var Client
-     */
-    protected $clientService;
-   
-
-    /**
-     * Service constructor.
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->clientService = new Client();
-    }
 
     /**
      * @param $paramLimit
      * @return mixed
      */
-    public function getPortal($paramLimit)
+    public static function getPortal($paramLimit)
     {
             $method = 'GET';
             $params = [
@@ -48,7 +35,7 @@ class Service
                 'paramlimit_' => $paramLimit,
                 'paramoffset_' => '50'
             ];
-            $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery'.$this->httpQueryBuild($params);
+            $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery'.self::httpQueryBuild($params);
             $options = [
                 'headers' => [
                     'postman-token' => 'f7ddb980-67a6-3ff4-50a5-02d2ddb509e4',
@@ -64,15 +51,15 @@ class Service
                 ]
 
             ];
-           $response = $this->processRequest($method, $endpoint, $options);
+           $response = self::processRequest($method, $endpoint, $options);
         return $response['resultset'];
 
     }
 
     /**
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return mixed
      */
-    public function getCountPortal()
+    public static function getCountPortal()
     {
         $method   = 'POST';
         $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery';
@@ -111,14 +98,15 @@ class Service
             ],
             'form_params' => $params
         ];
-        $reponse = $this->processRequest($method, $endpoint ,$options);
+        $reponse = self::processRequest($method, $endpoint ,$options);
         return $reponse['resultset'][0][0];
     }
+
     /**
      * @param array $params
      * @return string
      */
-    public function httpQueryBuild(array $params)
+    public static function httpQueryBuild(array $params)
     {
         $httpQuery = '';
 
@@ -143,15 +131,29 @@ class Service
         return '?' . $httpQuery;
     }
 
-    public function processRequest($method , $endpoint, $options)
+    /**
+     * @param $method
+     * @param $endpoint
+     * @param $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public static function processRequest($method , $endpoint, $options)
     {
         try {
-            $response = $this->clientService->request($method, $endpoint, $options);
+            $response = self::httpClient()->request($method, $endpoint, $options);
             $response = json_decode($response->getBody(), true);
             return $response;
         } catch (ClientException $e) {
             $message = json_decode($e->getResponse()->getBody(), true);
             return print_r($message, $e->getResponse()->getStatusCode());
         }
+    }
+
+    /**
+     * @return Client
+     */
+    public static function httpClient()
+    {
+        return new Client();
     }
 }

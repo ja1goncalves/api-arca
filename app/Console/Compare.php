@@ -6,7 +6,7 @@ use App\Entities\Person;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\Service;
-use App\Repositories\PersonRepository;
+use App\Services\PersonService;
 use App\Services\SearchService;
 
 /**
@@ -26,8 +26,10 @@ class Compare extends Command
      */
     protected $service;
 
-
-    protected $personRepository;
+    /**
+     * @var
+     */
+    protected $personService;
     /**
      * The console command description.
      *
@@ -35,22 +37,25 @@ class Compare extends Command
      */
     protected $description = 'Create Directories and Remove Directories';
 
+    /**
+     * @var SearchService
+     */
     protected $searchService;
 
     /**
      * Compare constructor.
      * @param Service $service
-     * @param PersonRepository $personRepository
+     * @param PersonService $personService
      * @param SearchService $searchService
      */
     public function __construct(Service          $service,
-                                PersonRepository $personRepository,
+                                PersonService    $personService,
                                 SearchService    $searchService)
     {
         parent::__construct();
-        $this->service = $service;
-        $this->personRepository = $personRepository;
-        $this->searchService    = $searchService;
+        $this->service       = $service;
+        $this->personService = $personService;
+        $this->searchService = $searchService;
     }
 
     /**
@@ -59,32 +64,35 @@ class Compare extends Command
      */
     public function handle()
     {
-        $limit  = $this->service->getCountPortal();
-        $search = $this->searchService->create(['total' => $limit],true);
-        $people = $this->service->getPortal($limit);
-       
-        foreach ($people as $person) {
-            $data = [
-                'institution'    => $person[0],
-                'cpf'            => $person[1],
-                'registration'   => $person[2],
-                'name'           => $person[3],
-                'category'       => $person[4],
-                'office'         => $person[5],
-                'function_person'=> $person[7],
-                'value_liquid'   => $person[9],
-                'status'         => 0,
-                'search_id'      => $search->id,
-            ];
-            if (!$this->verifyExist($person[2]))
-            {
-                $this->personRepository->create($data);
-            }else{
-                Person::where('registration', '=', $person[2])
-                    ->update(array_merge($data,['status' => Person::STATUS_PERMANENCIA]));
-            }
 
+        if ($this->searchService->getSearchCurrent($this->personService->getPersonPermanent())) {
+            $limit = $this->service->getCountPortal();
+            $search = $this->searchService->create(['total' => $limit], true);
+            $people = $this->service->getPortal($limit);
+
+            foreach ($people as $person) {
+                $data = [
+                    'institution'      => $person[0],
+                    'cpf'              => $person[1],
+                    'registration'     => $person[2],
+                    'name'             => $person[3],
+                    'category'         => $person[4],
+                    'office'           => $person[5],
+                    'function_person'  => $person[7],
+                    'value_liquid'     => $person[9],
+                    'status'           => 0,
+                    'search_id'        => $search->id,
+                ];
+                if (!$this->verifyExist($person[2])) {
+                    $this->personService->create($data);
+                } else {
+                    Person::where('registration', '=', $person[2])
+                        ->update(array_merge($data, ['status' => Person::STATUS_PERMANENCIA]));
+                }
+
+            }
         }
+            echo "Verificado! \n";
     }
 
     /**
@@ -93,7 +101,7 @@ class Compare extends Command
      */
     public function verifyExist($registration)
     {
-        return !empty($this->personRepository->skipPresenter()->findWhere(['registration' => $registration ])->count());
+        return !empty($this->personService->findWhere(['registration' => $registration ],true));
     }
 
     /**
@@ -104,6 +112,6 @@ class Compare extends Command
         return Person::where('update_at','<',Carbon::now())
             ->update(['status' => Person::STATUS_SAIDA]);
     }
-   
+    
 
 }

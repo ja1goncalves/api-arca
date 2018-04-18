@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\SearchRepository;
 use App\Services\Traits\CrudMethods;
+use Carbon\Carbon;
 
 /**
  * Class BankAccountService
@@ -23,4 +24,13 @@ class SearchService extends AppService
         $this->repository = $repository;
     }
 
+    /**
+     * @param $search_id
+     * @return bool
+     */
+    public function getSearchCurrent($search_id)
+    {
+        $search = $this->find($search_id, true);
+        return Carbon::now()->format('Y-m') == $search->created_at->format('Y-m') ? false : true;
+    }
 }
