@@ -26,8 +26,9 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
         }
         if (is_numeric($status)) {
             $model = $model->where('status', $status);
+        }else {
+            $model = $model->where('status', '!=', 1);
         }
-
         return $model;
     }
 }
