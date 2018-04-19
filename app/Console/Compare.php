@@ -115,6 +115,5 @@ class Compare extends Command
         return Person::where('updated_at','<',Carbon::now()->format('Y-m-d'))
             ->update(['status' => Person::STATUS_SAIDA]);
     }
-    
 
 }
