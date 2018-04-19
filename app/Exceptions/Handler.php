@@ -29,10 +29,6 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    public function unauthenticated(Request $request)
-    {
-        return response(['error' => 'unauthorized'], 401);
-    }
 
     /**
      * Report or log an exception.

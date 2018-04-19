@@ -18,14 +18,14 @@ class Service
      * @param $paramLimit
      * @return mixed
      */
-    public static function getPortal($paramLimit)
+    public static function getPortal($paramLimit, $month)
     {
             $method = 'GET';
             $params = [
                 'path' => '/public/OpenReports/Portal_Producao/Painel_Remuneracao/Painel_Remuneracao.cda',
                 'dataAccessId' => 'sql_jndi',
                 'parampara_ano' => '2018',
-                'parammes_' => '3',
+                'parammes_' => $month,
                 'paramsituacao' => 'Ativo',
                 'parammatricula_' => '',
                 'parampara_orgao' => '%',
@@ -59,7 +59,7 @@ class Service
     /**
      * @return mixed
      */
-    public static function getCountPortal()
+    public static function getCountPortal($month)
     {
         $method   = 'POST';
         $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery';
@@ -70,7 +70,7 @@ class Service
             'pageSize'            => '0',
             'pageStart'           => '0',
             'parammatricula_'     => '',
-            'parammes_'           => '3',
+            'parammes_'           => $month,
             'paramoutros'         => '3',
             'parampara_ano'       => '2018',
             'parampara_orgao'     => '%',

@@ -65,10 +65,9 @@ class Compare extends Command
     public function handle()
     {
 
-        if ($this->searchService->getSearchCurrent($this->personService->getPersonPermanent())) {
-            $limit = $this->service->getCountPortal();
+            $limit = $this->service->getCountPortal(2);
             $search = $this->searchService->create(['total' => $limit], true);
-            $people = $this->service->getPortal($limit);
+            $people = $this->service->getPortal($limit, 2);
 
             foreach ($people as $person) {
                 $data = [
@@ -80,36 +79,40 @@ class Compare extends Command
                     'office'           => $person[5],
                     'function_person'  => $person[7],
                     'value_liquid'     => $person[9],
-                    'status'           => 0,
                     'search_id'        => $search->id,
                 ];
                 if (!$this->verifyExist($person[2])) {
-                    $this->personService->create($data);
+                   $data['status'] = Person::STATUS_ENTRADA;
                 } else {
-                    Person::where('registration', '=', $person[2])
-                        ->update(array_merge($data, ['status' => Person::STATUS_PERMANENCIA]));
+                   $data['status'] = Person::STATUS_PERMANENCIA;
+                }
+                if (!$this->verifyExist($person[2], $search->id)) {
+                    $this->personService->create($data);
                 }
 
             }
-        }
+            $this->verifyOutput();
             echo "Verificado! \n";
     }
 
     /**
      * @param $registration
+     * @param bool $search_id
      * @return bool
      */
-    public function verifyExist($registration)
+    public function verifyExist($registration, $search_id = false)
     {
-        return !empty($this->personService->findWhere(['registration' => $registration ],true));
+        if ($search_id) {
+            return !empty($this->personService->findWhere(['registration' => $registration, 'search_id' => $search_id], true));
+        }
+        return !empty($this->personService->findWhere(['registration' => $registration], true));
     }
-
     /**
      * @return mixed
      */
     public function verifyOutput()
     {
-        return Person::where('update_at','<',Carbon::now())
+        return Person::where('updated_at','<',Carbon::now()->format('Y-m-d'))
             ->update(['status' => Person::STATUS_SAIDA]);
     }
     
