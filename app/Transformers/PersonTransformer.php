@@ -31,6 +31,7 @@ class PersonTransformer extends TransformerAbstract
             'search_id'    => $model->search_id,
             'status'       => $model->status,
             'status_title' => $model->statusTitle(),
+            'office'       => $model->office,
 //            'created_at' => $model->created_at->toDateTimeString(),
 //            'updated_at' => $model->updated_at->toDateTimeString()
         ];
