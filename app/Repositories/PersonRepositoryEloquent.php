@@ -19,10 +19,10 @@ class PersonRepositoryEloquent extends AppRepository implements PersonRepository
 
     protected $fieldSearchable = [
         'id',
-        'institution'  => 'ilike',
-        'cpf'          => 'ilike',
-        'name'         => 'ilike',
-        'registration' => 'ilike',
+        'institution'  => 'like',
+        'cpf'          => 'like',
+        'name'         => 'like',
+        'registration' => 'like',
     ];
 
     /**
