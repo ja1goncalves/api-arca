@@ -67,3 +67,8 @@ php artisan passport:keys
 
 Storage folder and Passport Keys needs to change chmod and chown!
 
+## Laravel Jobs
+
+```
+* * * * * php /var/www/ongarca-backend/artisan schedule:run >> /dev/null 2>&1
+```
