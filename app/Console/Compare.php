@@ -65,10 +65,11 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit = $this->service->getCountPortal(1);
+            $limit  = $this->service->getCountPortal(1);
             $search = $this->searchService->create(['total' => $limit], true);
             $people = $this->service->getPortal($limit, 1);
-
+            $count  = 0;
+            $start  = Carbon::now()->format('d-m-Y H:i:s');
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -87,12 +88,21 @@ class Compare extends Command
                    $data['status'] = Person::STATUS_PERMANENCIA;
                 }
                 if (!$this->verifyExist($person[2], $search->id)) {
+                    \Log::debug($data);
                     $this->personService->create($data);
+                    \Log::info("gravado! \n");
                 }
-
+                $count++;
             }
             $this->verifyOutput();
-            echo "Verificado! \n";
+           $end  = Carbon::now()->format('d-m-Y H:i:s');
+
+        \Log::info("Iniciou as ! \n");
+        \Log::info($start);
+        \Log::info("Terminou! \n");
+        \Log::info($end."\n");
+        \Log::info($count."\n");
+        \Log::info("Verificados! \n");
     }
 
     /**
