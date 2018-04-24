@@ -82,25 +82,20 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-                if (!$this->verifyExist($person[2])) {
-                   $data['status'] = Person::STATUS_ENTRADA;
-                } else {
-                   $data['status'] = Person::STATUS_PERMANENCIA;
-                }
-                if (!$this->verifyExist($person[2], $search->id)) {
-                    \Log::debug($data);
-                    $this->personService->create($data);
-                    \Log::info("gravado! \n");
-                }
+                $verify = $this->verifyExist($person[2]);
+                $data['status'] = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
+                 \Log::debug($data['name']);
+                 $this->personService->create($data);
+                 \Log::info("gravado! \n");
                 $count++;
             }
             $this->verifyOutput();
-           $end  = Carbon::now()->format('d-m-Y H:i:s');
+            $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
-        \Log::info($start);
+        \Log::debug($start);
         \Log::info("Terminou! \n");
-        \Log::info($end."\n");
+        \Log::debug($end."\n");
         \Log::info($count."\n");
         \Log::info("Verificados! \n");
     }
