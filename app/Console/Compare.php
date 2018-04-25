@@ -65,9 +65,9 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit         = $this->service->getCountPortal(2);
+            $limit         = $this->service->getCountPortal(1);
             $search        = $this->searchService->create(['total' => $limit], true);
-            $people        = $this->service->getPortal($limit, 2);
+            $people        = $this->service->getPortal($limit, 1);
             $count         = 0;
             $ids_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
@@ -86,7 +86,6 @@ class Compare extends Command
                 ];
 //                $verify = $this->verifyExist($person[2]);
 //                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
-                 $data['status'] =  Person::STATUS_ENTRADA;
                  $this->personService->create($data,true);
 //                if($data['status'] == Person::STATUS_PERMANENCIA)
 ////                {
