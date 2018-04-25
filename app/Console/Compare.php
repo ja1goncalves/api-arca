@@ -71,7 +71,7 @@ class Compare extends Command
             $count         = 0;
             $ids_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
-            $search_id_old = $search->id - 1;
+//            $search_id_old = $search->id - 1;
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -84,17 +84,19 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-                $verify = $this->verifyExist($person[2],$search_id_old);
-                $data['status'] = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
-                $person = $this->personService->create($data,true);
-                if($data['status'] = Person::STATUS_PERMANENCIA)
-                {
-                    $ids_current[] = ['id' => $person->id];
-                }
+//                $verify = $this->verifyExist($person[2]);
+//                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
+                 $data['status'] =  Person::STATUS_ENTRADA;
+                 $this->personService->create($data,true);
+//                if($data['status'] == Person::STATUS_PERMANENCIA)
+////                {
+//                    $ids_current[] = ['id' => $person->id];
+////                }
                 $count++;
             }
-            $this->updatePeopleCurrent($ids_current);
-            $this->verifyOutput($search_id_old);
+
+//            $this->updatePeopleCurrent($ids_current);
+//            $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
