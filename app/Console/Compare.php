@@ -65,13 +65,13 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit         = $this->service->getCountPortal(1);
+            $limit         = $this->service->getCountPortal(2);
             $search        = $this->searchService->create(['total' => $limit], true);
-            $people        = $this->service->getPortal($limit, 1);
+            $people        = $this->service->getPortal($limit, 2);
             $count         = 0;
             $ids_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
-//            $search_id_old = $search->id - 1;
+            $search_id_old = $search->id - 1;
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -84,18 +84,18 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-//                $verify = $this->verifyExist($person[2]);
-//                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
-                 $this->personService->create($data,true);
-//                if($data['status'] == Person::STATUS_PERMANENCIA)
-////                {
-//                    $ids_current[] = ['id' => $person->id];
-////                }
+                $verify = $this->verifyExist($person[2]);
+                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
+                $person =  $this->personService->create($data,true);
+                if($data['status'] == Person::STATUS_PERMANENCIA)
+                {
+                    $ids_current[] = ['id' => $person->id];
+                }
                 $count++;
             }
 
-//            $this->updatePeopleCurrent($ids_current);
-//            $this->verifyOutput($search_id_old);
+            $this->updatePeopleCurrent($ids_current);
+            $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
