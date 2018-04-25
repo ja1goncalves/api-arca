@@ -65,11 +65,13 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit  = $this->service->getCountPortal(1);
-            $search = $this->searchService->create(['total' => $limit], true);
-            $people = $this->service->getPortal($limit, 1);
-            $count  = 0;
-            $start  = Carbon::now()->format('d-m-Y H:i:s');
+            $limit         = $this->service->getCountPortal(2);
+            $search        = $this->searchService->create(['total' => $limit], true);
+            $people        = $this->service->getPortal($limit, 2);
+            $count         = 0;
+            $ids_current   = [];
+            $start         = Carbon::now()->format('d-m-Y H:i:s');
+            $search_id_old = $search->id - 1;
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -82,13 +84,17 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-//                $verify = $this->verifyExist($person[2]);
-//                $data['status'] = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
-                  $data['status'] = Person::STATUS_ENTRADA;
-                  $this->personService->create($data);
-                  $count++;
+                $verify = $this->verifyExist($person[2],$search_id_old);
+                $data['status'] = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
+                $person = $this->personService->create($data,true);
+                if($data['status'] = Person::STATUS_PERMANENCIA)
+                {
+                    $ids_current[] = ['id' => $person->id];
+                }
+                $count++;
             }
-//            $this->verifyOutput();
+            $this->updatePeopleCurrent($ids_current);
+            $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
@@ -111,13 +117,25 @@ class Compare extends Command
         }
         return !empty($this->personService->findWhere(['registration' => $registration], true));
     }
+
     /**
+     * @param $id
      * @return mixed
      */
-    public function verifyOutput()
+    public function verifyOutput($id)
     {
-        return Person::where('updated_at','<',Carbon::now()->format('Y-m-d'))
+        return Person::where('status','=',Person::STATUS_ENTRADA)
+            ->where('search_id','=',$id)
             ->update(['status' => Person::STATUS_SAIDA]);
     }
 
+    /**
+     * @param array $ids
+     */
+    public function updatePeopleCurrent(array $ids)
+    {
+        foreach ($ids as $id) {
+            $this->personService->update(['status' => Person::STATUS_PERMANENCIA], $id['id']);
+        }
+    }
 }
