@@ -2,12 +2,14 @@
 
 namespace App\Console;
 
+use App\Entities\AnalysisResult;
 use App\Entities\Person;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\Service;
 use App\Services\PersonService;
 use App\Services\SearchService;
+use App\Services\AnalysisResultService;
 
 /**
  * Class EmailMessage
@@ -42,20 +44,25 @@ class Compare extends Command
      */
     protected $searchService;
 
+    protected $analysisResultService;
+
     /**
      * Compare constructor.
      * @param Service $service
      * @param PersonService $personService
      * @param SearchService $searchService
+     * @param AnalysisResultService $analysisResultService
      */
-    public function __construct(Service          $service,
-                                PersonService    $personService,
-                                SearchService    $searchService)
+    public function __construct(Service               $service,
+                                PersonService         $personService,
+                                SearchService         $searchService,
+                                AnalysisResultService $analysisResultService)
     {
         parent::__construct();
         $this->service       = $service;
         $this->personService = $personService;
         $this->searchService = $searchService;
+        $this->analysisResultService = $analysisResultService;
     }
 
     /**
@@ -64,14 +71,13 @@ class Compare extends Command
      */
     public function handle()
     {
-
+            $this->analysisResult(1 ,2);die();
             $limit         = $this->service->getCountPortal(2);
             $search        = $this->searchService->create(['total' => $limit], true);
             $people        = $this->service->getPortal($limit, 2);
             $count         = 0;
             $registration_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
-//            $search_id_old = $search->id - 1;
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -145,6 +151,37 @@ class Compare extends Command
         Person::where('status','=',Person::STATUS_ENTRADA)
             ->where('search_id','=',$search_id)
             ->update(['status' => Person::STATUS_SAIDA]);
+
+    }
+
+    /**
+     * @param $search_id_old
+     * @param $search_id_new
+     */
+    public function analysisResult($search_id_old ,$search_id_new)
+    {
+         $people_new = $this->personService->findWhere(['status' => 0 ,'search_id' => $search_id_new]);
+         $people_old = $this->personService->findWhere(['status' => 2 ,'search_id' => $search_id_old]);
+
+        foreach ($people_new as $person) {
+            $data = [
+                'person' => $person->id,
+                'search_id_old' => $search_id_old,
+                'search_id_new' => $search_id_new,
+                'type' => AnalysisResult::TYPE_ENTRADA
+            ];
+            $this->analysisResultService->create($data);
+        }
+
+        foreach ($people_old as $person) {
+            $data = [
+                'person' => $person->id,
+                'search_id_old' => $search_id_old,
+                'search_id_new' => $search_id_new,
+                'type' => AnalysisResult::TYPE_SAIDA
+            ];
+            $this->analysisResultService->create($data);
+        }
 
     }
 }
