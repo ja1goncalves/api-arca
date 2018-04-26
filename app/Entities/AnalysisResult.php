@@ -51,6 +51,6 @@ class AnalysisResult extends Model implements Transformable
      */
     public function getTypeTitleAttribute()
     {
-        return $this->attributes['type'] = 1 ? 'Saiu' : 'Entrou';
+        return $this->attributes['type'] == 1 ? 'Saiu' : 'Entrou';
     }
 }
