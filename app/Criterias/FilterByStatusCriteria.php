@@ -19,7 +19,6 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-//        $search    = $this->request->query->get('search');
         $status    = $this->request->query->get('status');
         $search_id = $this->request->query->get('search_id');
         if (is_numeric($search_id)) {
@@ -28,11 +27,6 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
         if (is_numeric($status)) {
             $model = $model->where('status', $status);
         }
-//        if (!empty($search)){
-//            $model = $model->where('name','like', '%'.$search.'%')
-//            ->orWhere('institution','like', '%'.$search.'%')
-//            ->orWhere('registration','like', '%'.$search.'%');
-//        }
         return $model;
     }
 }

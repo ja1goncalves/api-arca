@@ -19,10 +19,12 @@ class AnalysisResultRepositoryEloquent extends AppRepository implements Analysis
 
     protected $fieldSearchable = [
         'id',
-        'person_id'     => 'like',
-        'search_id_old' => 'like',
-        'search_id_new' => 'like',
-        'Person.name'   => 'like',
+        'person_id'          => 'like',
+        'search_id_old'      => 'like',
+        'search_id_new'      => 'like',
+        'Person.name'        => 'like',
+        'Person.institution' => 'like',
+        'Person.office'      => 'like',
     ];
 
     /**
@@ -31,11 +33,13 @@ class AnalysisResultRepositoryEloquent extends AppRepository implements Analysis
      * @var array
      */
     protected $fieldsRules = [
-        'id'            => ['numeric', 'max:2147483647'],
-        'person_id'     => ['numeric', 'max:2147483647'],
-        'search_id_old' => ['numeric', 'max:2147483647'],
-        'search_id_new' => ['numeric', 'max:2147483647'],
-        'person.name'   => ['string', ],
+        'id'                 => ['numeric', 'max:2147483647'],
+        'person_id'          => ['numeric', 'max:2147483647'],
+        'search_id_old'      => ['numeric', 'max:2147483647'],
+        'search_id_new'      => ['numeric', 'max:2147483647'],
+        'person.name'        => ['string', ],
+        'person.institution' => ['string', ],
+        'person.office'      => ['string', ],
 
     ];
     /**
