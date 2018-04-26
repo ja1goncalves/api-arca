@@ -14,11 +14,12 @@ use App\Validators\PersonValidator;
  *
  * @package namespace App\Repositories;
  */
-class PersonRepositoryEloquent extends BaseRepository implements PersonRepository
+class PersonRepositoryEloquent extends AppRepository implements PersonRepository
 {
 
     protected $fieldSearchable = [
         'id',
+        'institution'  => 'like',
         'cpf'          => 'like',
         'name'         => 'like',
         'registration' => 'like',
@@ -31,6 +32,7 @@ class PersonRepositoryEloquent extends BaseRepository implements PersonRepositor
      */
     protected $fieldsRules = [
         'id'            => ['numeric', 'max:2147483647'],
+        'institution'   => ['max:255'],
         'name'          => ['max:100'],
         'cpf'           => ['max:20'],
         'registration'  => ['max:100'],
