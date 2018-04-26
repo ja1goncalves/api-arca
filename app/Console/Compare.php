@@ -71,7 +71,7 @@ class Compare extends Command
             $count         = 0;
             $registration_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
-            $search_id_old = $search->id - 1;
+//            $search_id_old = $search->id - 1;
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -84,17 +84,17 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-                $verify = $this->verifyExist($person[2]);
-                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
-                $person =  $this->personService->create($data,true);
-                if($data['status'] == Person::STATUS_PERMANENCIA)
-                {
-                    $registration_current[] = ['registration' => $person->registration];
-                }
+//                $verify = $this->verifyExist($person[2]);
+//                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
+                $this->personService->create($data,true);
+//                if($data['status'] == Person::STATUS_PERMANENCIA)
+//                {
+//                    $registration_current[] = ['registration' => $person[2]];
+//                }
                 $count++;
             }
 
-            $this->updatePeopleCurrent($registration_current,$search->id);
+//            $this->updatePeopleCurrent($registration_current,$search->id);
 //            $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
