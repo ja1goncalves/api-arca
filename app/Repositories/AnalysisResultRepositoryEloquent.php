@@ -59,7 +59,9 @@ class AnalysisResultRepositoryEloquent extends AppRepository implements Analysis
         return AnalysisResultValidator::class;
     }
 
-
+    /**
+     * @return mixed
+     */
    public function presenter()
    {
        return AnalysisResultPresenter::class;
