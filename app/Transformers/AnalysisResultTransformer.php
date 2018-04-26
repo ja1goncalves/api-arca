@@ -28,7 +28,7 @@ class AnalysisResultTransformer extends TransformerAbstract
             'search_id_new'  => $model->search_id_new,
             'person'         => $model->person,
             'type'           => $model->type,
-            'type_title'     => $model->type_title(),
+            'type_title'     => $model->type_title,
             'created_at'     => $model->created_at->toDateTimeString()
         ];
     }
