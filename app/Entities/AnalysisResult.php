@@ -41,7 +41,7 @@ class AnalysisResult extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Person()
+    public function person()
     {
         return $this->belongsTo(Person::class);
     }
