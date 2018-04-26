@@ -71,11 +71,12 @@ class Compare extends Command
      */
     public function handle()
     {
-            $this->analysisResult(1 ,2);die();
-            $limit         = $this->service->getCountPortal(2);
+
+            $limit         = $this->service->getCountPortal(3);
             $search        = $this->searchService->create(['total' => $limit], true);
-            $people        = $this->service->getPortal($limit, 2);
+            $people        = $this->service->getPortal($limit, 3);
             $count         = 0;
+            $search_id_old = $search->id -1;
             $registration_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
             foreach ($people as $person) {
@@ -101,7 +102,7 @@ class Compare extends Command
             }
 
             $this->updatePeopleCurrent($registration_current,$search->id);
-//            $this->verifyOutput($search_id_old);
+            $this->analysisResult($search_id_old, $search->id);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
@@ -165,7 +166,7 @@ class Compare extends Command
 
         foreach ($people_new as $person) {
             $data = [
-                'person' => $person->id,
+                'person_id' => $person->id,
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_ENTRADA
@@ -175,7 +176,7 @@ class Compare extends Command
 
         foreach ($people_old as $person) {
             $data = [
-                'person' => $person->id,
+                'person_id' => $person->id,
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_SAIDA
