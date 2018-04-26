@@ -113,7 +113,8 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                                     }else{
                                         $query->where(function($q) use ($field,$condition,$value, $parsedValue) {
                                             $q->where($field,$condition,$value)
-                                                ->orWhere(DB::raw("normalize_search($field)"),$condition, "%$parsedValue%");
+//                                                ->orWhere(DB::raw("normalize_search($field)"),$condition, "%$parsedValue%");
+                                                ->orWhere($field,$condition, "%$parsedValue%");
                                         });
                                     }
 
@@ -124,7 +125,7 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                                 }else{
                                     $query->where(function($q) use ($modelTableName, $field,$condition,$value, $parsedValue) {
                                         $q->where($modelTableName.'.'.$field,$condition,$value)
-                                            ->orWhere(DB::raw('normalize_search('.$modelTableName.'.'.$field.')'), $condition, "%$parsedValue%");
+                                            ->orWhere($modelTableName.'.'.$field, $condition, "%$parsedValue%");
                                     });
                                 }
 
@@ -141,7 +142,8 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                                     }else{
                                         $query->where(function($q) use ($field,$condition,$value, $parsedValue) {
                                             $q->where($field,$condition,$value)
-                                                ->orWhere(DB::raw("normalize_search($field)"),$condition, "%$parsedValue%");
+//                                                ->orWhere(DB::raw("normalize_search($field)"),$condition, "%$parsedValue%");
+                                                ->orWhere($field,$condition, "%$parsedValue%");
                                         });
                                     }
 
@@ -153,7 +155,7 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                                 }else{
                                     $query->orWhere(function($q) use ($modelTableName, $field,$condition,$value, $parsedValue) {
                                         $q->where($modelTableName.'.'.$field,$condition,$value)
-                                            ->orWhere(DB::raw('normalize_search('.$modelTableName.'.'.$field.')'),$condition, "%$parsedValue%");
+                                            ->orWhere($modelTableName.'.'.$field,$condition, "%$parsedValue%");
                                     });
                                 }
                             }
