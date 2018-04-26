@@ -69,7 +69,7 @@ class Compare extends Command
             $search        = $this->searchService->create(['total' => $limit], true);
             $people        = $this->service->getPortal($limit, 2);
             $count         = 0;
-            $ids_current   = [];
+            $registration_current   = [];
             $start         = Carbon::now()->format('d-m-Y H:i:s');
             $search_id_old = $search->id - 1;
             foreach ($people as $person) {
@@ -89,12 +89,12 @@ class Compare extends Command
                 $person =  $this->personService->create($data,true);
                 if($data['status'] == Person::STATUS_PERMANENCIA)
                 {
-                    $ids_current[] = ['id' => $person->id];
+                    $registration_current[] = ['registration' => $person->registration];
                 }
                 $count++;
             }
 
-            $this->updatePeopleCurrent($ids_current);
+            $this->updatePeopleCurrent($registration_current,$search->id);
             $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
@@ -131,12 +131,20 @@ class Compare extends Command
     }
 
     /**
-     * @param array $ids
+     * @param $registration_currents
+     * @param $search_id
      */
-    public function updatePeopleCurrent(array $ids)
+    public function updatePeopleCurrent($registration_currents,$search_id )
     {
-        foreach ($ids as $id) {
-            $this->personService->update(['status' => Person::STATUS_PERMANENCIA], $id['id']);
+        $search_id = $search_id - 1;
+        foreach ($registration_currents as $person) {
+            Person::where('registration','=',$person['registration'])
+                ->where('search_id','=',$search_id)
+                ->update(['status' => Person::STATUS_PERMANENCIA]);
         }
+        Person::where('status','=',Person::STATUS_ENTRADA)
+            ->where('search_id','=',$search_id)
+            ->update(['status' => Person::STATUS_SAIDA]);
+
     }
 }
