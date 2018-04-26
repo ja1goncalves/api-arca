@@ -21,6 +21,7 @@ trait CrudMethods
     {
         $this->repository
             ->resetCriteria()
+            ->pushCriteria(app('App\Criterias\FilterBySearchCriteria'))
             ->pushCriteria(app('App\Criterias\FilterByStatusCriteria'))
             ->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         return $this->repository->paginate($limit);
