@@ -51,7 +51,7 @@ class AppRequestCriteria extends RepositoryRequestCriteria
         $with = $this->request->get(config('repository.criteria.params.with', 'with'), null);
         $sortedBy = !empty($sortedBy) ? $sortedBy : 'asc';
 
-        \Log::debug('srgrdsgdrgdrg');
+
         if ($search && is_array($fieldsSearchable) && count($fieldsSearchable)) {
 
             $searchFields = is_array($searchFields) || is_null($searchFields) ? $fieldsSearchable : explode(';', $searchFields);
@@ -163,7 +163,6 @@ class AppRequestCriteria extends RepositoryRequestCriteria
             });
         }
 
-        \Log::debug($orderBy);
 
         if (isset($orderBy) && !empty($orderBy)) {
             $split = explode('|', $orderBy);
@@ -179,9 +178,7 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                 $sortTable = $split[0];
                 $sortColumn = $split[1];
 
-                \Log::debug($table);
-                \Log::debug($sortTable);
-                \Log::debug($sortColumn);
+              
 
                 $split = explode(':', $sortTable);
                 if(count($split) > 1) {
@@ -199,7 +196,6 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                     $match = [];
                     preg_match('/_status$/', $sortTable, $match);
 
-                    \Log::info($match);
 
                     if(count($match)){
                         $prefix = $sortTable;
@@ -215,7 +211,6 @@ class AppRequestCriteria extends RepositoryRequestCriteria
                     ->orderBy($sortColumn, $sortedBy)
                     ->addSelect($table.'.*');
 
-                \Log::info($model->toSql());
             } else {
                 $model = $model->orderBy($orderBy, $sortedBy);
 //                \Log::info($model->toSql());
