@@ -15,6 +15,8 @@ class Person extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'people';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -22,7 +22,7 @@ class AnalysisResultRepositoryEloquent extends AppRepository implements Analysis
         'person_id'     => 'like',
         'search_id_old' => 'like',
         'search_id_new' => 'like',
-        'person.name'   => 'like',
+        'Person.name'   => 'like',
     ];
 
     /**

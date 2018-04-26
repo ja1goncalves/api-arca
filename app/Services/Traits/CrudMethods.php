@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services\Traits;
+namespace App\Services\Traits;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -23,7 +23,8 @@ trait CrudMethods
             ->resetCriteria()
             ->pushCriteria(app('App\Criterias\FilterBySearchCriteria'))
             ->pushCriteria(app('App\Criterias\FilterByStatusCriteria'))
-            ->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'))
+        ;
         return $this->repository->paginate($limit);
     }
 
