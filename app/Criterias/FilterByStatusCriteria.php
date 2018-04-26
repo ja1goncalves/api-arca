@@ -29,7 +29,9 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
             $model = $model->where('status', $status);
         }
         if (!empty($search)){
-            $model = $model->where('name','like', '%'.$search.'%');
+            $model = $model->where('name','like', '%'.$search.'%')
+            ->orWhere('institution','like', '%'.$search.'%')
+            ->orWhere('registration','like', '%'.$search.'%');
         }
         return $model;
     }
