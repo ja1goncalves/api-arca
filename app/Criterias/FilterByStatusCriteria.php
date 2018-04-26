@@ -19,6 +19,7 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
+        $type      = $this->request->query->get('type');
         $status    = $this->request->query->get('status');
         $search_id = $this->request->query->get('search_id');
         if (is_numeric($search_id)) {
@@ -26,8 +27,9 @@ class FilterByStatusCriteria extends AppCriteria implements CriteriaInterface
         }
         if (is_numeric($status)) {
             $model = $model->where('status', $status);
-        }else {
-            $model = $model->where('status', '!=', 1);
+        }
+        if (is_numeric($type)) {
+            $model = $model->where('type', $type);
         }
         return $model;
     }
