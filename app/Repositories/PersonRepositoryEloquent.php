@@ -14,7 +14,7 @@ use App\Validators\PersonValidator;
  *
  * @package namespace App\Repositories;
  */
-class PersonRepositoryEloquent extends AppRepository implements PersonRepository
+class PersonRepositoryEloquent extends BaseRepository implements PersonRepository
 {
 
     protected $fieldSearchable = [
