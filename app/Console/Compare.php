@@ -95,7 +95,7 @@ class Compare extends Command
             }
 
             $this->updatePeopleCurrent($registration_current,$search->id);
-            $this->verifyOutput($search_id_old);
+//            $this->verifyOutput($search_id_old);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
