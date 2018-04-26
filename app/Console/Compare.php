@@ -72,13 +72,14 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit         = $this->service->getCountPortal(3);
-            $search        = $this->searchService->create(['total' => $limit], true);
-            $people        = $this->service->getPortal($limit, 3);
-            $count         = 0;
-            $search_id_old = $search->id -1;
-            $registration_current   = [];
-            $start         = Carbon::now()->format('d-m-Y H:i:s');
+            $limit                = $this->service->getCountPortal(3);
+            $search               = $this->searchService->create(['total' => $limit], true);
+            $people               = $this->service->getPortal($limit, 3);
+            $count                = 0;
+            $search_id_old        = $search->id -1;
+            $registration_current = [];
+            $start                = Carbon::now()->format('d-m-Y H:i:s');
+            $this->clearSearchOld($search_id_old);
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -130,11 +131,10 @@ class Compare extends Command
      * @param $id
      * @return mixed
      */
-    public function verifyOutput($id)
+    public function clearSearchOld($id)
     {
-        return Person::where('status','=',Person::STATUS_ENTRADA)
-            ->where('search_id','=',$id)
-            ->update(['status' => Person::STATUS_SAIDA]);
+        return Person::where('search_id','=',$id)
+            ->update(['status' => Person::STATUS_ENTRADA]);
     }
 
     /**
