@@ -91,7 +91,7 @@ class Compare extends Command
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
                 ];
-                $verify = $this->verifyExist($person[2]);
+                $verify = $this->verifyExist($person[2],$search_id_old);
                 $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;
                 $this->personService->create($data,true);
                 if($data['status'] == Person::STATUS_PERMANENCIA)
