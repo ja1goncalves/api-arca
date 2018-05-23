@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\PersonRepository::class, \App\Repositories\PersonRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SearchRepository::class, \App\Repositories\SearchRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\AnalysisResultRepository::class, \App\Repositories\AnalysisResultRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\PeopleDataRepository::class, \App\Repositories\PeopleDataRepositoryEloquent::class);
 
     }
 }
