@@ -12,8 +12,9 @@ use App\Services\Traits\CrudMethods;
  */
 class AnalysisResultService extends AppService
 {
-    use CrudMethods;
-
+    use CrudMethods{
+        all  as public processAll;
+    }
     /**
      * @var AnalysisResultRepository
      */
@@ -24,4 +25,14 @@ class AnalysisResultService extends AppService
         $this->repository = $repository;
     }
 
+    public function all(int $limit = 20)
+    {
+
+        $this->repository
+            ->resetCriteria()
+            ->pushCriteria(app('App\Criterias\FilterBySearchCriteria'))
+            ->pushCriteria(app('App\Criterias\FilterByStatusCriteria'))
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
+        return $this->processAll($limit);
+    }
 }

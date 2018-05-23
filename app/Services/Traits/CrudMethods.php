@@ -19,14 +19,7 @@ trait CrudMethods
      */
     public function all(int $limit = 20)
     {
-        $this->repository
-            ->resetCriteria()
-            ->pushCriteria(app('App\Criterias\FilterBySearchCriteria'))
-            ->pushCriteria(app('App\Criterias\FilterByStatusCriteria'))
-            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
-            ->pushCriteria(app('App\Criterias\AppRequestCriteria'))
-        ;
-        return $this->repository->paginate($limit);
+       return $this->repository->paginate($limit);
     }
 
     /**

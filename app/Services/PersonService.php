@@ -12,8 +12,9 @@ use App\Services\Traits\CrudMethods;
  */
 class PersonService extends AppService
 {
-    use CrudMethods;
-
+    use CrudMethods{
+        all    as public processAll;
+    }
     /**
      * @var PersonRepository
      */
@@ -35,5 +36,14 @@ class PersonService extends AppService
             $person = $this->findWhere(['status' => Person::STATUS_ENTRADA], true);
         }
         return $person->search_id;
+    }
+
+    public function all(int $limit = 20)
+    {
+        $this->repository
+            ->resetCriteria()
+            ->pushCriteria(app('App\Criterias\FilterByStatusCriteria'))
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
+        return $this->processAll($limit);
     }
 }

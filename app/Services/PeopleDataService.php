@@ -11,8 +11,9 @@ use App\Services\Traits\CrudMethods;
  */
 class PeopleDataService extends AppService
 {
-    use CrudMethods;
-
+    use CrudMethods{
+        all    as public processAll;
+    }
     /**
      * @var PeopleDataRepository
      */
@@ -23,4 +24,13 @@ class PeopleDataService extends AppService
         $this->repository = $repository;
     }
 
+    public function all(int $limit = 20)
+    {
+
+        $this->repository
+            ->resetCriteria()
+            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
+        return $this->processAll($limit);
+    }
 }
