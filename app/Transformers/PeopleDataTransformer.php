@@ -34,8 +34,8 @@ class PeopleDataTransformer extends TransformerAbstract
             'zip_code'           => $model->zip_code,
             'state_abbreviation' => $model->state_abbreviation,
             'cellphone_op'       => $model->cellphone_op,
-            'created_at'         => $model->created_at->toDateTimeString(),
-            'updated_at'         => $model->updated_at->toDateTimeString()
+//            'created_at'         => $model->created_at->toDateTimeString(),
+//            'updated_at'         => $model->updated_at->toDateTimeString()
         ];
     }
 }

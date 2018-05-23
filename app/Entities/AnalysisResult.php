@@ -29,11 +29,11 @@ class AnalysisResult extends Model implements Transformable
     /**
      * @var array
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+//    protected $dates = [
+//        'created_at',
+//        'updated_at',
+//        'deleted_at',
+//    ];
 
     const TYPE_ENTRADA = 0;
     const TYPE_SAIDA   = 1;
