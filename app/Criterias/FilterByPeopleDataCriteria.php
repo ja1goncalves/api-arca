@@ -19,12 +19,12 @@ class FilterByPeopleDataCriteria extends AppCriteria implements CriteriaInterfac
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        $name = str_replace("  ", " ",$this->request->query->get('name'));
+        $tab  = [' ','  ','   ','    '];
+        $name = str_replace($tab, " ",$this->request->query->get('name'));
         $str  = ['-','.'];
         $cpf  = str_replace($str, "",$this->request->query->get('cpf'));
         $name = trim(str_replace(" ", "_",$name ));
         $cpf  = str_replace("*", "_",$cpf);
-        \Log::debug($name);
         if (isset($name)) {
             $model = $model->where('name','like',$name);
         }
