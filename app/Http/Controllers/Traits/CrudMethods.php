@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Traits;
-
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use App\Services\AppService;
