@@ -15,6 +15,23 @@ use App\Validators\PeopleDataValidator;
  */
 class PeopleDataRepositoryEloquent extends AppRepository implements PeopleDataRepository
 {
+
+    protected $fieldSearchable = [
+        'id',
+        'name'  => 'like',
+        'cpf'   => 'like',
+    ];
+
+    /**
+     * Regras para busca
+     *
+     * @var array
+     */
+    protected $fieldsRules = [
+        'id'            => ['numeric', 'max:2147483647'],
+        'name'          => ['max:100'],
+        'cpf'           => ['max:20'],
+    ];
     /**
      * Specify Model class name
      *
