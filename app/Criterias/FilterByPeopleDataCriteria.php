@@ -23,10 +23,10 @@ class FilterByPeopleDataCriteria extends AppCriteria implements CriteriaInterfac
         $cpf   = $this->request->query->get('cpf');
 
         if (isset($name)) {
-            $model = $model->where('name','like',"'".$name."'");
+            $model = $model->where('name','like',$name);
         }
         if (isset($cpf)) {
-            $model = $model->where('cpf','like', "'".$cpf."'");
+            $model = $model->where('cpf','like', $cpf);
         }
         \Log::debug($model->toSql());
         return $model;
