@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Presenters\PeopleInssPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\PeopleInssRepository;
@@ -13,7 +14,7 @@ use App\Validators\PeopleInssValidator;
  *
  * @package namespace App\Repositories;
  */
-class PeopleInssRepositoryEloquent extends BaseRepository implements PeopleInssRepository
+class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRepository
 {
     /**
      * Specify Model class name
@@ -36,13 +37,12 @@ class PeopleInssRepositoryEloquent extends BaseRepository implements PeopleInssR
         return PeopleInssValidator::class;
     }
 
-
     /**
-     * Boot up the repository, pushing criteria
+     * @return mixed
      */
-    public function boot()
+    public function presenter()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        return PeopleInssPresenter::class;
     }
-    
+
 }
