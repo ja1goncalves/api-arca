@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::resource('people', 'PeopleController', ['except' => ['create', 'edit']]);
     Route::resource('analysisResults', 'AnalysisResultsController', ['except' => ['create', 'edit']]);
     Route::resource('peopleData', 'PeopleDatasController', ['except' => ['create', 'edit']]);
-
+    Route::resource('peopleInss', 'PeopleInssesController', ['only' => ['index', 'show']]);
 });
 Route::get('/', function () {
     return view('welcome');
