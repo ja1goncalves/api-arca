@@ -22,12 +22,18 @@ class PeopleInssTransformer extends TransformerAbstract
     public function transform(PeopleInss $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'            => (int) $model->id,
+            'name'          => $model->name,
+            'cpf'           => $model->cpf,
+            'phone'         => $model->phone,
+            'zip_code'      => $model->zip_code,
+            'country'       => $model->country,
+            'state'         => $model->state,
+            'city'          => $model->city,
+            'district'      => $model->district,
+            'street'        => $model->street,
+            'created_at'    => $model->created_at,
+            'updated_at'    => $model->updated_at
         ];
     }
 }

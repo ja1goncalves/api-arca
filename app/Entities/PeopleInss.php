@@ -20,6 +20,18 @@ class PeopleInss extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [ 'name',
+                            'cpf',
+                            'phone',
+                            'zip_code',
+                            'country',
+                            'state',
+                            'city',
+                            'district',
+                            'street'];
+
+    protected $dates = ['created_at', 'updated_at'];
+
+    //protected $hidden = [];
 
 }

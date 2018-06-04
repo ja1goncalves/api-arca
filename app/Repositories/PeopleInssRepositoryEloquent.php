@@ -16,6 +16,20 @@ use App\Validators\PeopleInssValidator;
  */
 class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRepository
 {
+
+    protected $fieldSearchable = [
+        'id',
+        'name' => 'like',
+        'cpf' => 'like',
+        'zip_code' => 'like',
+    ];
+
+    protected $fieldsRules = [
+        'name'          => ['max:100'],
+        'cpf'           => ['numeric', 'max:2147483647'],
+        'zip_code'      => ['numeric', 'max:2147483647'],
+    ];
+
     /**
      * Specify Model class name
      *
