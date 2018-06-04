@@ -19,18 +19,20 @@ class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRe
 
     protected $fieldSearchable = [
         'id',
-        'name' => 'like',
-        'cpf' => 'like',
-        'zip_code' => 'like',
+        'name'  => 'like',
+        'cpf'   => 'like',
     ];
 
+    /**
+     * Regras para busca
+     *
+     * @var array
+     */
     protected $fieldsRules = [
         'id'            => ['numeric', 'max:2147483647'],
         'name'          => ['max:100'],
-        'cpf'           => ['numeric', 'max:2147483647'],
-        'zip_code'      => ['numeric', 'max:2147483647'],
+        'cpf'           => ['max:20'],
     ];
-
     /**
      * Specify Model class name
      *

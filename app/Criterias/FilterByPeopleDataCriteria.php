@@ -31,7 +31,6 @@ class FilterByPeopleDataCriteria extends AppCriteria implements CriteriaInterfac
         if (isset($cpf)) {
             $model = $model->where('cpf','like', $cpf);
         }
-        \Log::debug($model->toSql());
         return $model;
     }
 }

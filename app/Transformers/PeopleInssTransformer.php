@@ -23,6 +23,7 @@ class PeopleInssTransformer extends TransformerAbstract
     {
         return [
             'id'            => (int) $model->id,
+
             'name'          => $model->name,
             'cpf'           => $model->cpf,
             'phone'         => $model->phone,
