@@ -16,6 +16,7 @@ class CreatePeopleInssesTable extends Migration
 	public function up()
 	{
 		Schema::create('people_insses', function(Blueprint $table) {
+			$table->increments('id');
 			$table->string('name', 20);
 			$table->string('cpf', 11);
 			$table->string('phone', 20)->nullable();
