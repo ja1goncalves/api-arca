@@ -16,7 +16,15 @@ class CreatePeopleInssesTable extends Migration
 	public function up()
 	{
 		Schema::create('people_insses', function(Blueprint $table) {
-            $table->increments('id');
+			$table->string('name', 20);
+			$table->string('cpf', 11);
+			$table->string('phone', 20)->nullable();
+			$table->string('zip_code', 20)->nullable();
+			$table->string('country', 20)->default('BR');
+			$table->string('state', 4)->nullable();
+			$table->string('city', 50)->nullable();
+			$table->string('district',200)->nullable();
+			$table->string('street', 300)->nullable();
 
             $table->timestamps();
 		});

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Presenters\PeopleInssPresenter;
-use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\PeopleInssRepository;
 use App\Entities\PeopleInss;
@@ -16,6 +15,23 @@ use App\Validators\PeopleInssValidator;
  */
 class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRepository
 {
+
+    protected $fieldSearchable = [
+        'id',
+        'name'  => 'like',
+        'cpf'   => 'like',
+    ];
+
+    /**
+     * Regras para busca
+     *
+     * @var array
+     */
+    protected $fieldsRules = [
+        'id'            => ['numeric', 'max:2147483647'],
+        'name'          => ['max:100'],
+        'cpf'           => ['max:20'],
+    ];
     /**
      * Specify Model class name
      *
