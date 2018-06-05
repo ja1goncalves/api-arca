@@ -26,7 +26,7 @@ class PeopleInssTransformer extends TransformerAbstract
             'name'       => $model->name,
             'cpf'        => $model->cpf,
             'phone'      => $model->phone,
-            'country'    => $model->country,
+            'country'    => $model->country ?:'BR',
             'state'      => $model->state,
             'city'       => $model->city,
             'district'   => $model->district,
