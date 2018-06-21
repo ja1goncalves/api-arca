@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::resource('peopleData', 'PeopleDatasController', ['except' => ['create', 'edit']]);
     Route::resource('peopleInss', 'PeopleInssesController', ['except' => ['create', 'edit']]);
 
+    Route::get('/users', 'UsersController@userData');
+
 });
 Route::get('/', function () {
     return view('welcome');

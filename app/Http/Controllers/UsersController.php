@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,15 +31,21 @@ class UsersController extends Controller
     protected $validator;
 
     /**
+     * @var UserService
+     */
+    protected $service;
+
+    /**
      * UsersController constructor.
      *
      * @param UserRepository $repository
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserRepository $repository, UserValidator $validator, UserService $service)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->service = $service;
     }
 
     /**
@@ -49,6 +56,10 @@ class UsersController extends Controller
     public function index()
     {
         return response()->json($this->repository->all());
+    }
+
+    public function userData(Request $request){
+        return response()->json($this->service->userData($request));
     }
 
 }
