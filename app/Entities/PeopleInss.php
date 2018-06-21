@@ -20,6 +20,8 @@ class PeopleInss extends Model implements Transformable
     protected $fillable = [
         'cpf',
         'name',
+        'beneficiary_nu',
+        'birth_date',
         'phone',
         'cpf',
         'country',

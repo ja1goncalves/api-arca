@@ -18,8 +18,9 @@ class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRe
 
     protected $fieldSearchable = [
         'id',
-        'name'  => 'like',
-        'cpf'   => 'like',
+        'name'          => 'like',
+        'cpf'           => 'like',
+        'beneficiary_nu'=> 'like',
     ];
 
     /**
@@ -31,6 +32,7 @@ class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRe
         'id'            => ['numeric', 'max:2147483647'],
         'name'          => ['max:100'],
         'cpf'           => ['max:20'],
+        'beneficiary_nu'=> ['max:12'],
     ];
     /**
      * Specify Model class name
