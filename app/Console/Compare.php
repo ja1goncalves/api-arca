@@ -72,9 +72,9 @@ class Compare extends Command
     public function handle()
     {
 
-            $limit                = $this->service->getCountPortal(4);
+            $limit                = $this->service->getCountPortal(5);
             $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 4);
+            $people               = $this->service->getPortal($limit, 5);
             $count                = 0;
             $search_id_old        = $search->id -1;
             $registration_current = [];
