@@ -30,6 +30,7 @@ class UserService extends AppService
         $user = Auth::user();
 
         $data['id'] = $user->id;
+        $data['type_user'] = $user->type_user;
         $data['name'] = $user->name;
         $data['email'] = $user->email;
         $data['ip'] = $request->getClientIp();

@@ -23,9 +23,9 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
+            'type_user'  => $model->type_user,
+            'name'       => $model->name,
+            'password'   => $model->password,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];
