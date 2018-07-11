@@ -25,7 +25,6 @@ class UserService extends AppService
         $this->repository = $repository;
     }
 
-
     public function userData($request){
         $user = Auth::user();
 

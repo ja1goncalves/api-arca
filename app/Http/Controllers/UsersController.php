@@ -12,6 +12,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
+use App\Http\Controllers\Traits\CrudMethods;
 
 /**
  * Class UsersController.
@@ -20,10 +21,8 @@ use App\Validators\UserValidator;
  */
 class UsersController extends Controller
 {
-    /**
-     * @var UserRepository
-     */
-    protected $repository;
+
+    use CrudMethods;
 
     /**
      * @var UserValidator
@@ -37,25 +36,13 @@ class UsersController extends Controller
 
     /**
      * UsersController constructor.
-     *
-     * @param UserRepository $repository
+     * @param UserService $service
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator, UserService $service)
+    public function __construct(UserValidator $validator, UserService $service)
     {
-        $this->repository = $repository;
         $this->validator  = $validator;
         $this->service = $service;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return response()->json($this->repository->all());
     }
 
     public function userData(Request $request){
