@@ -15,14 +15,14 @@ use App\Services\AnalysisResultService;
  * Class EmailMessage
  * @package App\Console\Commands
  */
-class Compare extends Command
+class CompareJaneiro extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'compare:run';
+    protected $signature = 'compare-janeiro:run';
     /**
      * @var Service
      */
@@ -72,14 +72,12 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(6);echo "total da pesquisa".$limit."\n";
-            $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 6); echo "Pegou no portal...\n";
+            echo "Enviando Requisição Aguarde......\n";
+            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
+            $search               = $this->searchService->create(['total' => $limit], true); echo "Enviando Requisição para portal Aguarde......\n";
+            $people               = $this->service->getPortal($limit, 1); echo "Pegou no portal...\n";
             $count                = 0;
-            $search_id_old        = $search->id -1;
-            $registration_current = [];
             $start                = Carbon::now()->format('d-m-Y H:i:s');
-            $this->clearSearchOld($search_id_old);
             foreach ($people as $person) {
                 $data = [
                     'institution'      => $person[0],
@@ -91,19 +89,13 @@ class Compare extends Command
                     'function_person'  => $person[7],
                     'value_liquid'     => $person[9],
                     'search_id'        => $search->id,
+                    'status'           => Person::STATUS_ENTRADA
                 ];
-                $verify = $this->verifyExist($person[2],$search_id_old);
-                $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;echo $person[3]." gravado! \n";
+                echo $person[3]." gravado! \n";
                 $this->personService->create($data,true);
-                if($data['status'] == Person::STATUS_PERMANENCIA)
-                {
-                    $registration_current[] = ['registration' => $person[2]];
-                }
                 $count++;
             }
 
-            $this->updatePeopleCurrent($registration_current,$search->id);
-            $this->analysisResult($search_id_old, $search->id);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
 
         \Log::info("Iniciou as ! \n");
