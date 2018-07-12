@@ -72,9 +72,9 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(6);echo "total da pesquisa".$limit."\n";
+            $limit                = $this->service->getCountPortal(2);echo "total da pesquisa".$limit."\n";
             $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 6); echo "Pegou no portal...\n";
+            $people               = $this->service->getPortal($limit, 2); echo "Pegou no portal...\n";
             $count                = 0;
             $search_id_old        = $search->id -1;
             $registration_current = [];
@@ -105,7 +105,7 @@ class Compare extends Command
             $this->updatePeopleCurrent($registration_current,$search->id);
             $this->analysisResult($search_id_old, $search->id);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
-
+            echo "Terminou! \n".$end;
         \Log::info("Iniciou as ! \n");
         \Log::debug($start);
         \Log::info("Terminou! \n");
@@ -143,12 +143,14 @@ class Compare extends Command
      */
     public function updatePeopleCurrent($registration_currents,$search_id )
     {
+        echo "Upload People Current!... \n";
         $search_id = $search_id - 1;
         foreach ($registration_currents as $person) {
             Person::where('registration','=',$person['registration'])
                 ->where('search_id','=',$search_id)
                 ->update(['status' => Person::STATUS_PERMANENCIA]);
-        }
+            echo "atualizando a matricula: ".$person['registration']."\n";
+        }echo "Upload People Current Output!... \n";
         Person::where('status','=',Person::STATUS_ENTRADA)
             ->where('search_id','=',$search_id)
             ->update(['status' => Person::STATUS_SAIDA]);
@@ -161,16 +163,17 @@ class Compare extends Command
      */
     public function analysisResult($search_id_old ,$search_id_new)
     {
+      echo "analysisResult! \n";
          $people_new = $this->personService->findWhere(['status' => 0 ,'search_id' => $search_id_new]);
          $people_old = $this->personService->findWhere(['status' => 2 ,'search_id' => $search_id_old]);
-
+        echo "Pegando entradas de saidas! \n";
         foreach ($people_new as $person) {
             $data = [
                 'person_id' => $person->id,
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_ENTRADA
-            ];
+            ]; echo $person->id." indentificado! \n";
             $this->analysisResultService->create($data);
         }
 
@@ -180,7 +183,7 @@ class Compare extends Command
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_SAIDA
-            ];
+            ];echo $person->id." indentificado! \n";
             $this->analysisResultService->create($data);
         }
 
