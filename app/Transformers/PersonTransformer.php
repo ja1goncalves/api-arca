@@ -32,6 +32,7 @@ class PersonTransformer extends TransformerAbstract
             'status'       => $model->status,
             'status_title' => $model->statusTitle(),
             'office'       => $model->office,
+            'observation'  => $model->observation,
 //            'created_at' => $model->created_at->toDateTimeString(),
 //            'updated_at' => $model->updated_at->toDateTimeString()
         ];

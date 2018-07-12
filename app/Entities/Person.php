@@ -33,6 +33,7 @@ class Person extends Model implements Transformable
         'maturity_office',
         'value_liquid',
         'status',
+        'observation',
         'search_id',
     ];
     /**
