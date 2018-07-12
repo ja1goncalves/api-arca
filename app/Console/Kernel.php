@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Compare::class
+        Compare::class,
+        CompareJaneiro::class,
     ];
 
     /**
