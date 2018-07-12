@@ -173,7 +173,7 @@ class Compare extends Command
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_ENTRADA
-            ]; echo $person->id." indentificado! \n";
+            ]; echo $person->id." indentificado como entrada! \n";
             $this->analysisResultService->create($data);
         }
 
@@ -183,7 +183,7 @@ class Compare extends Command
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_SAIDA
-            ];echo $person->id." indentificado! \n";
+            ];echo $person->id." indentificado como saida! \n";
             $this->analysisResultService->create($data);
         }
 
