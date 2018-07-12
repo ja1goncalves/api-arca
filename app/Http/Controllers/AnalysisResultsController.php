@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Services\AnalysisResultService;
 use App\Http\Controllers\Traits\CrudMethods;
 use App\Validators\AnalysisResultValidator;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class AnalysisResultsController.
@@ -34,7 +35,26 @@ class AnalysisResultsController extends AppController
      */
     public function __construct(AnalysisResultService $service, AnalysisResultValidator $validator)
     {
-        $this->service = $service;
-        $this->validator  = $validator;
+        $this->service   = $service;
+        $this->validator = $validator;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $limit = $request->query->get('limit', 15);
+
+        $cacheName = str_replace($request->url(), '', $request->fullUrl());
+
+        $results = Cache::remember($cacheName, 43200, function () use($limit) {
+            return $this->service->all($limit);
+        });
+
+        return response()->json($results, 200);
     }
 }
