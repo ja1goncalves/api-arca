@@ -29,8 +29,7 @@ trait CrudMethods
      */
     public function create(array $data, $skipPresenter = false)
     {
-//        return $skipPresenter ? $this->repository->skipPresenter()->create($data) : $this->repository->create($data);
-         $this->repository->skipPresenter()->create($data);
+        return $skipPresenter ? $this->repository->skipPresenter()->create($data) : $this->repository->create($data);
     }
 
     /**

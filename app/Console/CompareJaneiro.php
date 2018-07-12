@@ -73,8 +73,8 @@ class CompareJaneiro extends Command
     {
             echo "Preparando...\n";
             echo "Enviando Requisição Aguarde......\n";
-            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa".$limit."\n";
-            $search               = $this->searchService->create(['total' => $limit], true);
+            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
+            $search               = $this->searchService->create(['total' => $limit], true); echo "Enviando Requisição para portal Aguarde......\n";
             $people               = $this->service->getPortal($limit, 1); echo "Pegou no portal...\n";
             $count                = 0;
             $start                = Carbon::now()->format('d-m-Y H:i:s');
