@@ -72,9 +72,9 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(3);echo "total da pesquisa".$limit."\n";
+            $limit                = $this->service->getCountPortal(5);echo "total da pesquisa".$limit."\n";
             $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 3); echo "Pegou no portal...\n";
+            $people               = $this->service->getPortal($limit, 5); echo "Pegou no portal...\n";
             $count                = 0;
             $search_id_old        = $search->id -1;
             $registration_current = [];
@@ -173,7 +173,7 @@ class Compare extends Command
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_ENTRADA
-            ]; echo $person->id." indentificado! \n";
+            ]; echo $person->id." indentificado como entrada! \n";
             $this->analysisResultService->create($data);
         }
 
@@ -183,7 +183,7 @@ class Compare extends Command
                 'search_id_old' => $search_id_old,
                 'search_id_new' => $search_id_new,
                 'type' => AnalysisResult::TYPE_SAIDA
-            ];echo $person->id." indentificado! \n";
+            ];echo $person->id." indentificado como saida! \n";
             $this->analysisResultService->create($data);
         }
 
