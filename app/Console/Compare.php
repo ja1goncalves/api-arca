@@ -72,7 +72,7 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(5);echo "total da pesquisa".$limit."\n";
+            $limit                = $this->service->getCountPortal(5);echo "total da pesquisa ".$limit."\n";
             $search               = $this->searchService->create(['total' => $limit], true);
             $people               = $this->service->getPortal($limit, 5); echo "Pegou no portal...\n";
             $count                = 0;
