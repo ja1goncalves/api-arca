@@ -13,27 +13,33 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class PeopleInss extends Model implements Transformable
 {
+    /**
+     *
+     */
     use TransformableTrait;
     /**
      * @var array
      */
     protected $fillable = [
-        'cpf',
         'name',
-        'phone',
         'cpf',
-        'country',
-        'district',
-        'city',
+        'birth_date',
+        'beneficiary_nu',
+        'phone',
         'zip_code',
+        'country',
         'state',
+        'city',
+        'district',
         'street'
     ];
 
-
+    /**
+     * @var array
+     */
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
+        'deleted_at'
     ];
 }
