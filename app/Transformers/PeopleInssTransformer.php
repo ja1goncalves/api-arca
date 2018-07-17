@@ -29,13 +29,13 @@ class PeopleInssTransformer extends TransformerAbstract
             'beneficiary_nu' => $model->beneficiary_nu,
             'phone'          => $model->phone,
             'zip_code'       => $model->zip_code,
-            'country'        => $model->country ?:'BR',
+            'country'        => $model->country ? : 'BR',
             'state'          => $model->state,
             'city'           => $model->city,
             'district'       => $model->district,
             'street'         => $model->street,
-            'created_at'     => $model->created_at->toDateTimeString(),
-            'updated_at'     => $model->updated_at->toDateTimeString()
+            'created_at'     => $model->created_at->toDateTimeString() ? : null,
+            'updated_at'     => $model->updated_at->toDateTimeString() ? : null
         ];
     }
 }
