@@ -10,6 +10,7 @@ use App\Services\Service;
 use App\Services\PersonService;
 use App\Services\SearchService;
 use App\Services\AnalysisResultService;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EmailMessage
@@ -71,39 +72,39 @@ class CompareJaneiro extends Command
      */
     public function handle()
     {
-            echo "Preparando...\n";
-            echo "Enviando Requisição Aguarde......\n";
-            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
-            $search               = $this->searchService->create(['total' => $limit], true); echo "Enviando Requisição para portal Aguarde......\n";
-            $people               = $this->service->getPortal($limit, 1); echo "Pegou no portal...\n";
-            $count                = 0;
-            $start                = Carbon::now()->format('d-m-Y H:i:s');
-            foreach ($people as $person) {
-                $data = [
-                    'institution'      => $person[0],
-                    'cpf'              => $person[1],
-                    'registration'     => $person[2],
-                    'name'             => $person[3],
-                    'category'         => $person[4],
-                    'office'           => $person[5],
-                    'function_person'  => $person[7],
-                    'value_liquid'     => $person[9],
-                    'search_id'        => $search->id,
-                    'status'           => Person::STATUS_ENTRADA
-                ];
-                echo $person[3]." gravado! \n";
-                $this->personService->create($data,true);
-                $count++;
-            }
-
-            $end  = Carbon::now()->format('d-m-Y H:i:s');
-
-        \Log::info("Iniciou as ! \n");
-        \Log::debug($start);
-        \Log::info("Terminou! \n");
-        \Log::debug($end."\n");
-        \Log::info($count."\n");
-        \Log::info("Verificados! \n");
+//            echo "Preparando...\n";
+//            echo "Enviando Requisição Aguarde......\n";
+//            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
+//            $search               = $this->searchService->create(['total' => $limit], true); echo "Enviando Requisição para portal Aguarde......\n";
+//            $people               = $this->service->getPortal($limit, 1); echo "Pegou no portal...\n";
+//            $count                = 0;
+//            $start                = Carbon::now()->format('d-m-Y H:i:s');
+//            foreach ($people as $person) {
+//                $data = [
+//                    'institution'      => $person[0],
+//                    'cpf'              => $person[1],
+//                    'registration'     => $person[2],
+//                    'name'             => $person[3],
+//                    'category'         => $person[4],
+//                    'office'           => $person[5],
+//                    'function_person'  => $person[7],
+//                    'value_liquid'     => $person[9],
+//                    'search_id'        => $search->id,
+//                    'status'           => Person::STATUS_ENTRADA
+//                ];
+//                echo $person[3]." gravado! \n";
+//                $this->personService->create($data,true);
+//                $count++;
+//            }
+//
+//            $end  = Carbon::now()->format('d-m-Y H:i:s');
+//
+//        \Log::info("Iniciou as ! \n");
+//        \Log::debug($start);
+//        \Log::info("Terminou! \n");
+//        \Log::debug($end."\n");
+//        \Log::info($count."\n");
+//        \Log::info("Verificados! \n");
     }
 
     /**
