@@ -34,8 +34,8 @@ class PeopleInssTransformer extends TransformerAbstract
             'city'           => $model->city,
             'district'       => $model->district,
             'street'         => $model->street,
-//            'created_at'     => $model->created_at->toDateTimeString() ? : null,
-//            'updated_at'     => $model->updated_at->toDateTimeString() ? : null
+//            'created_at'     => $model->created_at->toDateTimeString(),
+//            'updated_at'     => $model->updated_at->toDateTimeString()
         ];
     }
 }
