@@ -38,5 +38,4 @@ class PeopleInss extends Model implements Transformable
     ];
 
     //protected $hidden = [];
-
 }

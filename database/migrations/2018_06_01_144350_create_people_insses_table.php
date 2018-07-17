@@ -24,8 +24,8 @@ class CreatePeopleInssesTable extends Migration
             $table->string('country')->default('BR');
             $table->string('state', 4)->nullable();
             $table->string('city', 50)->nullable();
-            $table->string('district')->nullable();
-            $table->string('street', 50)->nullable();
+            $table->string('district', 200)->nullable();
+            $table->string('street', 300)->nullable();
             $table->timestamps();
 		});
 	}

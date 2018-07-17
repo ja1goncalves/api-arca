@@ -50,7 +50,7 @@ class Service
                     'accept' => 'application/json, text/javascript, */*; q=0.01'
                 ]
 
-            ];
+            ];echo "Aguardando resposta ............................";
            $response = self::processRequest($method, $endpoint, $options);
         return $response['resultset'];
 

@@ -22,20 +22,17 @@ class PeopleInssTransformer extends TransformerAbstract
     public function transform(PeopleInss $model)
     {
         return [
-            'id'            => (int) $model->id,
-
-            'name'          => $model->name,
-            'cpf'           => $model->cpf,
-            'phone'         => $model->phone,
-            'zip_code'      => $model->zip_code,
-            'country'       => $model->country,
-            'state'         => $model->state,
-            'city'          => $model->city,
-            'district'      => $model->district,
-            'street'        => $model->street,
-
-            'created_at'    => isset($model->created_at) ? $model->created_at->toDateTimeString() : null,
-            'updated_at'    => isset($model->updated_at) ? $model->updated_at->toDateTimeString() : null,
+            'id'         => (int) $model->id,
+            'name'       => $model->name,
+            'cpf'        => $model->cpf,
+            'phone'      => $model->phone,
+            'country'    => $model->country ?:'BR',
+            'state'      => $model->state,
+            'city'       => $model->city,
+            'district'   => $model->district,
+            'street'     => $model->street,
+            'created_at' => $model->created_at->toDateTimeString(),
+            'updated_at' => $model->updated_at->toDateTimeString()
         ];
     }
 }
