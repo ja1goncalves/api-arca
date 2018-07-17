@@ -72,11 +72,12 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(5);echo "total da pesquisa".$limit."\n";
+            $limit                = $this->service->getCountPortal(6);echo "total da pesquisa ".$limit."\n";
             $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 5); echo "Pegou no portal...\n";
+            $people               = $this->service->getPortal($limit, 6); echo "Pegou no portal...\n";
             $count                = 0;
-            $search_id_old        = $search->id -1;
+            $search_id            = $search->id;
+            $search_id_old        = $search_id -1;
             $registration_current = [];
             $start                = Carbon::now()->format('d-m-Y H:i:s');
             $this->clearSearchOld($search_id_old);
@@ -90,7 +91,7 @@ class Compare extends Command
                     'office'           => $person[5],
                     'function_person'  => $person[7],
                     'value_liquid'     => $person[9],
-                    'search_id'        => $search->id,
+                    'search_id'        => $search_id,
                 ];
                 $verify = $this->verifyExist($person[2],$search_id_old);
                 $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;echo $person[3]." gravado! \n";
@@ -102,8 +103,8 @@ class Compare extends Command
                 $count++;
             }
 
-            $this->updatePeopleCurrent($registration_current,$search->id);
-            $this->analysisResult($search_id_old, $search->id);
+            $this->updatePeopleCurrent($registration_current,$search_id);
+            $this->analysisResult($search_id_old, $search_id);
             $end  = Carbon::now()->format('d-m-Y H:i:s');
             echo "Terminou! \n".$end;
         \Log::info("Iniciou as ! \n");
