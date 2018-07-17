@@ -72,7 +72,6 @@ class CompareJaneiro extends Command
      */
     public function handle()
     {
-        DB::statement('delete from people where search_id=6');echo "\n Terminou....";
 //            echo "Preparando...\n";
 //            echo "Enviando Requisição Aguarde......\n";
 //            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
