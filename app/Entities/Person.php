@@ -34,6 +34,7 @@ class Person extends Model implements Transformable
         'value_liquid',
         'status',
         'search_id',
+        'observation',
     ];
     /**
      * @var array
