@@ -30,7 +30,7 @@ class PeopleInssRepositoryEloquent extends AppRepository implements PeopleInssRe
      */
     protected $fieldsRules = [
         'id'            => ['numeric', 'max:2147483647'],
-        'name'          => ['max:100'],
+        'name'          => ['max:250'],
         'cpf'           => ['max:20'],
         'beneficiary_nu'=> ['max:12'],
     ];

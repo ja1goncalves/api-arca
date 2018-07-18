@@ -12,7 +12,7 @@ use App\Services\Traits\CrudMethods;
 class PeopleInssService extends AppService
 {
     use CrudMethods{
-        all    as public processAll;
+        all as public processAll;
     }
     /**
      * @var PeopleInssRepository
@@ -27,10 +27,10 @@ class PeopleInssService extends AppService
     public function all(int $limit = 20)
     {
 
-//        $this->repository
-//            ->resetCriteria()
-//            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
-//            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
+        $this->repository
+            ->resetCriteria()
+            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
         return $this->processAll($limit);
     }
   
