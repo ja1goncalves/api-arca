@@ -29,8 +29,8 @@ class PeopleDataService extends AppService
 
         $this->repository
             ->resetCriteria()
-            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
-            ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
+            ->pushCriteria(app('App\Criterias\AppRequestCriteria'))
+            ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'));
         return $this->processAll($limit);
     }
 }
