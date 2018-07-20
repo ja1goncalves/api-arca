@@ -26,6 +26,16 @@ class PersonService extends AppService
     }
 
     /**
+     * @param array $data
+     * @param $id
+     * @return array|mixed
+     */
+    public function update(array $data, $id)
+    {
+        return $this->repository->update(['observation' => $data['observation']], $id);
+    }
+
+    /**
      * @return mixed
      */
     public function getPersonPermanent()
