@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class FilterInssesByStateCriteriaCriteria.
+ * Class FilterInssesByStateCriteria.
  *
  * @package namespace App\Criteria;
  */
-class FilterInssesByStateCriteriaCriteria extends AppCriteria implements CriteriaInterface
+class FilterInssesByStateCriteria extends AppCriteria implements CriteriaInterface
 {
     /**
      * Apply criteria in query repository
