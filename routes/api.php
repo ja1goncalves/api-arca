@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user-logged', 'UsersController@index');
 
 Route::group(['middleware' => ['auth:api']], function(){
 
-    Route::resource('people', 'PeopleController', ['except' => ['create', 'edit']]);
+    Route::resource('people', 'PeopleController', ['except' => ['create']]);
     Route::resource('analysisResults', 'AnalysisResultsController', ['except' => ['create', 'edit']]);
     Route::resource('peopleData', 'PeopleDatasController', ['except' => ['create', 'edit']]);
     Route::resource('peopleInss', 'PeopleInssesController', ['except' => ['create', 'edit']]);
