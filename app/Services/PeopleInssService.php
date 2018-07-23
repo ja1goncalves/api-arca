@@ -28,8 +28,8 @@ class PeopleInssService extends AppService
     {
         $this->repository
             ->resetCriteria()
-            ->pushCriteria(app('App\Criterias\FilterInssesByCityCriteria'))
-            ->pushCriteria(app('App\Criterias\FilterInssesByStateCriteria'))
+            ->pushCriteria(app('App\Criterias\Inss\FilterByStateCriteria'))
+            ->pushCriteria(app('App\Criterias\Inss\FilterByCityCriteria'))
             ->pushCriteria(app('App\Criterias\FilterByPeopleDataCriteria'))
             ->pushCriteria(app('App\Criterias\AppRequestCriteria'));
         return $this->processAll($limit);

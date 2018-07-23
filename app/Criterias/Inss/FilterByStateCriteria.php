@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Criteria;
+namespace App\Criterias\Inss;
 
 use App\Criterias\AppCriteria;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class FilterInssesByCityCriteriaCriteria.
+ * Class FilterByStateCriteria.
  *
- * @package namespace App\Criteria;
+ * @package namespace App\Criterias\Inss;
  */
-class FilterInssesByCityCriteria extends AppCriteria implements CriteriaInterface
+class FilterByStateCriteria extends AppCriteria implements CriteriaInterface
 {
     /**
      * Apply criteria in query repository
@@ -23,10 +23,10 @@ class FilterInssesByCityCriteria extends AppCriteria implements CriteriaInterfac
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        $city = $this->request->query->get('city');
+        $state = $this->request->query->get('state');
 
-        if(ctype_alpha($city)){
-            $model = $model->where('city', 'like', strtoupper($city));
+        if(ctype_alpha($state)){
+            $model = $model->where('state', 'like', strtoupper($state));
         }
 
         return $model;
