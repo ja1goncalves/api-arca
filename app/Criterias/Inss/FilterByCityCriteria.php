@@ -28,7 +28,8 @@ class FilterByCityCriteria extends AppCriteria implements CriteriaInterface
 
         $city = isset($res)? AppHelper::removeAccentuation($res) : null ;
 
-        $model = $model->where('city', 'like', strtoupper($city));
+        if(!$city)
+            $model = $model->where('city', 'like', strtoupper($city));
 
         return $model;
     }
