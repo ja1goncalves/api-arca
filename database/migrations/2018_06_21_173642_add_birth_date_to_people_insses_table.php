@@ -13,12 +13,12 @@ class AddBirthDateToPeopleInssesTable extends Migration
      */
     public function up()
     {
-        Schema::table('people_insses', function (Blueprint $table) {
-            $table->string('birth_date', 12)->after('cpf')->nullable();
-            $table->string('beneficiary_nu', 12)->after('birth_date')->nullable();
-            $table->string('name', 50)->change();
-            $table->string('cpf', 15)->change();
-        });
+//        Schema::table('people_insses', function (Blueprint $table) {
+//            $table->string('birth_date', 12)->after('cpf')->nullable();
+//            $table->string('beneficiary_nu', 12)->after('birth_date')->nullable();
+//            $table->string('name', 50)->change();
+//            $table->string('cpf', 15)->change();
+//        });
     }
 
     /**
