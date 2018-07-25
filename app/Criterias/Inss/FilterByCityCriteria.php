@@ -24,18 +24,8 @@ class FilterByCityCriteria extends AppCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        $filter = $this->request->query->get('city');
-
-        if(strtoupper($filter) == 'NONE') { // pessoas com cidades não informadas
-            $model = $model->where([['city', '=', ''], ['city', '=', ' ']]);
-            return $model;
-        }
-
-        $city = isset($res)? AppHelper::removeAccentuation($res) : null;
-        if(isset($city)) {
-            $model = $model->where('city', '=', strtoupper($city));
-        }
-
+        $city = $this->request->query->get('city');
+        if (isset($city)) $model = $model->where('city', 'like', strtoupper($city));
         return $model;
     }
 }

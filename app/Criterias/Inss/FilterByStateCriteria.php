@@ -24,14 +24,7 @@ class FilterByStateCriteria extends AppCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $state = $this->request->query->get('state');
-
-        if(strtoupper($state) == 'NONE'){ // pessoas com o estado não informado
-            return $model->where([['state', '=', ''], ['state', '=', ' ']]);
-        }
-
-        if(ctype_alpha($state)) {
-            $model = $model->where('state', '=', strtoupper($state));
-        }
+        if (isset($state)) $model = $model->where('state', '=', $state);
 
         return $model;
     }
