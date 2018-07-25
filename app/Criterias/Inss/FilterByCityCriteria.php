@@ -25,7 +25,11 @@ class FilterByCityCriteria extends AppCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $city = $this->request->query->get('city');
-        if (isset($city)) $model = $model->where('city', 'like', strtoupper($city));
+
+        if (isset($city)){
+            $city = trim(str_replace(" ", "_",$city ));
+            $model = $model->where('city', 'like', $city);
+        }
         return $model;
     }
 }
