@@ -73,11 +73,11 @@ class Compare extends Command
     {
             echo "Preparando...\n";
             $limit                = $this->service->getCountPortal(7);echo "total da pesquisa ".$limit."\n";
-            $search               = $this->searchService->create(['total' => $limit], true);
+//            $search               = $this->searchService->create(['total' => $limit], true);
             $people               = $this->service->getPortal($limit, 7); echo "Pegou no portal...\n";
             $count                = 0;
-            $search_id            = $search->id;
-            $search_id_old        = $search_id -1;
+            $search_id            = 7;
+            $search_id_old        = 6;
             $registration_current = [];
             $start                = Carbon::now()->format('d-m-Y H:i:s');
             $this->clearSearchOld($search_id_old);
