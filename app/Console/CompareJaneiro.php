@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Entities\AnalysisResult;
 use App\Entities\Person;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\Service;
@@ -72,6 +73,9 @@ class CompareJaneiro extends Command
      */
     public function handle()
     {
+
+       $user = User::create(['name'=> 'convidado','email' => 'convidado@mangue3.com','password' => bcrypt('mangue3')]);
+        print_r($user);
 //            echo "Preparando...\n";
 //            echo "Enviando Requisição Aguarde......\n";
 //            $limit                = $this->service->getCountPortal(1);echo "total da pesquisa ".$limit."\n";
