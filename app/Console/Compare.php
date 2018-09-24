@@ -72,9 +72,9 @@ class Compare extends Command
     public function handle()
     {
             echo "Preparando...\n";
-            $limit                = $this->service->getCountPortal(6);echo "total da pesquisa ".$limit."\n";
+            $limit                = $this->service->getCountPortal(8);echo "total da pesquisa ".$limit."\n";
             $search               = $this->searchService->create(['total' => $limit], true);
-            $people               = $this->service->getPortal($limit, 6); echo "Pegou no portal...\n";
+            $people               = $this->service->getPortal($limit, 8); echo "Pegou no portal...\n";
             $count                = 0;
             $search_id            = $search->id;
             $search_id_old        = $search_id -1;
@@ -96,8 +96,7 @@ class Compare extends Command
                 $verify = $this->verifyExist($person[2],$search_id_old);
                 $data['status']  = !$verify ? Person::STATUS_ENTRADA : Person::STATUS_PERMANENCIA;echo $person[3]." gravado! \n";
                 $this->personService->create($data,true);
-                if($data['status'] == Person::STATUS_PERMANENCIA)
-                {
+                if($data['status'] == Person::STATUS_PERMANENCIA) {
                     $registration_current[] = ['registration' => $person[2]];
                 }
                 $count++;

@@ -33,7 +33,12 @@ class Service
                 'parampesquisa_cargo_' => '',
                 'paramoutros' => '3',
                 'paramlimit_' => $paramLimit,
-                'paramoffset_' => '50'
+                'paramoffset_' => '50',
+                'outputIndexId' => '1',
+                'pageSize' => '0',
+                'pageStart' => '0',
+                'paramsearchBox' => '',
+                'sortBy'              => ''
             ];
             $endpoint = 'http://web.transparencia.pe.gov.br/pentaho/plugin/cda/api/doQuery'.self::httpQueryBuild($params);
             $options = [
@@ -79,7 +84,7 @@ class Service
             'paramsearchBox'      => '',
             'paramsituacao'       => 'Ativo',
             'sortBy'              => '',
-            'paramoffset_'        => '50'
+            //'paramoffset_'        => '50'
         ];
         $options = [
             'headers' => [
